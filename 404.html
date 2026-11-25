@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>页面不存在 · 老杨游戏站</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#e8eef2;padding:24px;
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;text-align:center}
+  h1{font-size:56px;letter-spacing:4px;color:#9fd8ec;margin-bottom:12px}
+  p{color:#9fb0bb;font-size:15px;line-height:1.8;margin-bottom:8px}
+  code{background:rgba(255,255,255,.08);padding:2px 7px;border-radius:5px;color:#cfe9f5;font-size:13px}
+  a.home{display:inline-flex;align-items:center;gap:6px;margin-top:22px;color:#e8f4f8;text-decoration:none;
+    font-size:14px;font-weight:600;background:rgba(255,255,255,.08);
+    border:1px solid rgba(126,224,255,.38);border-radius:999px;padding:10px 18px;transition:.15s}
+  a.home:hover{background:rgba(126,224,255,.18);border-color:#7ee0ff;color:#fff}
+</style>
+</head>
+<body>
+<h1>404</h1>
+<p id="msg">这个地址下没有内容。</p>
+<p>游戏都在 <code>/laoyang-games/</code> 下面</p>
+<a class="home" href="/laoyang-games/">→ 去老杨游戏站</a>
+<script>
+(function () {
+  // 兜底：访问时漏掉 /laoyang-games 前缀（或多写了一层），自动纠正过去
+  var p = location.pathname;
+  var items = ['mario3-canvas','3d-arena','city3d','holo-card','map','galaxy.html',
+               'b-plan.html','contra.html','contra-us.html','pelican-ride.html',
+               'shadow-ninja.html','taiqiu.html','weiqi.html','xiangqi.html'];
+  var fixed = null;
+  for (var i = 0; i < items.length; i++) {
+    var k = items[i];
+    if (p === '/' + k || p.indexOf('/' + k + '/') === 0 || p.indexOf('/' + k) === 0) { fixed = '/laoyang-games' + p; break; }
+  }
+  // 多写了一层 /laoyang-games/laoyang-games/...
+  if (!fixed && p.indexOf('/laoyang-games/laoyang-games/') === 0) {
+    fixed = p.replace('/laoyang-games/laoyang-games/', '/laoyang-games/');
+  }
+  if (fixed) {
+    document.getElementById('msg').textContent = '地址少了前缀，正在跳转到正确位置…';
+    location.replace(fixed + location.search + location.hash);
+  }
+})();
+</script>
+</body>
+</html>
